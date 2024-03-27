@@ -62,13 +62,18 @@ exports.signupUser = (req, res, next) => {
         lastName: lastName,
         account: savedAccount,
       });
+      res.status(201).json({
+        message:
+          "User signed-up successfully, please Login.",
+        userId: user._id,
+      });
       return user.save();
     })
     // .then((savedUser) => {
     //   transporter.sendMail({
     //     to: email,
-    //     from: "tiffinyadm@gmail.com",
-    //     subject: "Verify your Account on Tiffiny",
+    //     from: "vanshikamohindra.vani@gmail.com",
+    //     subject: "Verify your Account on Find my tiffin",
     //     html: `
     //       <p>Please verify your email by clicking on the link below - Tiffiny</p>
     //       <p>Click this <a href="http://localhost:3002/auth/verify/${token}">link</a> to verify your account.</p>
@@ -236,6 +241,11 @@ exports.signupSeller = (req, res, next) => {
         },
         rating:rating,
       });
+      res.status(201).json({
+            message:
+              "Seller signed-up successfully, please login.",
+            sellerId: seller._id,
+          });
       return seller.save();
     })
     // .then((savedSeller) => {

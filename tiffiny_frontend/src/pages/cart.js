@@ -18,6 +18,7 @@ import { DateRangePicker, DateRange } from "materialui-daterange-picker";
 import useForm from "../hooks/forms";
 
 import CartItem from "../components/CartItem";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.spreadThis,
@@ -46,7 +47,29 @@ const useStyles = makeStyles((theme) => ({
     "&:disabled": {
       color: "#bfbfbf",
     },
+    
   },
+  emptyCart:{
+    display:"flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection:"column",
+  fontSize:"2rem",
+  height:"30rem"
+  
+  
+  },
+  link:{
+    textDecoration: "none",
+    /* color: rgb(46, 46, 46); */
+    color: "green",
+    // font: 1.2rem "Poppins";
+    transition: "ease 0.5s",
+    "&:hover": {
+      color: "rgb(26, 204, 26)",
+    },
+  }
+  
 }));
 
 const Cart = (props) => {
@@ -158,7 +181,7 @@ const Cart = (props) => {
         <Spinner />
       ) : (
         <>
-        <p>{step}</p>
+        {/* <p>{step}</p> */}
           <Typography variant="h5" className={classes.title}>
             {step === 1 && `Cart (${cartItems} Items)`}
             {step === 2 && "Delivery Details"}
@@ -168,6 +191,12 @@ const Cart = (props) => {
               <KeyboardBackspaceIcon />
             </MyButton>
           )} */}
+          {cartItems === 0 &&
+          <div className={classes.emptyCart}>
+          
+        <p>Cart is empty...</p>
+        <Link to="./" className={classes.link}>Browse Tiffin Centers </Link>
+      </div>}
           <Grid container direction="row" spacing={2}>
             <Grid item sm={1} />
             <Grid item sm={7}>
@@ -347,6 +376,7 @@ const Cart = (props) => {
             </>
           )}
             </Grid>
+            {cartItems!==0 &&
             <Grid item sm={3}>
               <Paper
                 className={classes.paper}
@@ -438,6 +468,7 @@ const Cart = (props) => {
                 </div>
               </Paper>
             </Grid>
+}
             <Grid item sm={1} />
           </Grid>
         

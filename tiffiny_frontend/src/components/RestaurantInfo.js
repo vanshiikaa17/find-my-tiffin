@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     top: "25.5%",
     left: "6.5%",
     bottom: 0,
-    height: "40%",
+    height: "28%",
     width: "44%",
   },
   borderLeft: {
@@ -26,10 +26,10 @@ const useStyles = makeStyles({
     top: "25.5%",
     left: "6.5%",
     bottom: 0,
-    height: "40%",
+    height: "28%",
   },
   para: {
-    fontSize: "x-large",
+    fontSize: "5rem",
     marginLeft: "32%",
   },
 });

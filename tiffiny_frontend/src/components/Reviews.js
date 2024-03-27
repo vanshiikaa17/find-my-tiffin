@@ -80,8 +80,9 @@ function Reviews(props) {
     <List style={{margin: '0 auto', display: "flex", flexDirection: "column"}}>
         {reviews ? (
           reviews.length > 0 ? (
-            reviews.map((item) => (
-              <>
+            reviews.map((item, index) => (
+              <React.Fragment key={index} >
+               
                 <ListItem alignItems="flex-start">
                 <ListItemText
                   primary={`${item.title} ${item.rating}/5`}
@@ -100,7 +101,7 @@ function Reviews(props) {
                 />
               </ListItem>
               <Divider variant="inset" component="li" />
-            </>
+            </React.Fragment>
             ))
           ) : (
             <p className={classes.para}>

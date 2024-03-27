@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-import cover from "../images/homeTiffinPic.webp";
+import cover from "../images/tiffinHome.jpg";
 
 const useStyles = makeStyles((theme) => ({
   presentation: {
@@ -65,10 +65,10 @@ const HomeStart = (props) => {
           Finding Tiffin Center
         </Typography>
         <Typography className={classes.delivery} noWrap>
-          EASYYYY
+          IS NOW EASY !!
         </Typography>
         <Typography variant="body2" className={classes.paragraph}>
-          Through Tiffiny we are making your journey of finding a good, healthy tiffin center easier, effective and less time consuming.
+          Having trouble in selecting the perfect meal of the day that's not just healthy but is tasty too? We've got you, don't worry!
         </Typography>
         <Button variant="outlined" className={classes.ctaOrder} onClick={props.handleClick}>
           ORDER NOW

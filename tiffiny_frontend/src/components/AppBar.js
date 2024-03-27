@@ -55,7 +55,7 @@ export default function AppBarPrimary() {
       <Toolbar>
         <Link to="/" className={classes.title}>
           <Typography variant="h6" noWrap>
-            <span className={classes.name}>Tiffiny</span>
+            <span className={classes.name}>Find My Tiffin</span>
           </Typography>
         </Link>
         {authenticated ? (

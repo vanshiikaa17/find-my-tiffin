@@ -107,13 +107,13 @@ export default function SellerDashboard() {
   return (
     <>
       <RestaurantInfo {...sellerData} />
-      <Grid container direction="row" style={{ marginTop: 40 }}>
+      <Grid container direction="row" style={{ marginTop: 10 }}>
         <Grid item xs={12} sm={1} />
         <Grid item xs={12} sm={6}>
           <Typography
             gutterBottom
             variant="h5"
-            style={{ textAlign: "center", marginBottom: 30 }}
+            style={{ textAlign: "center", marginBottom: 50 }}
             noWrap
           >
             Add, Edit, Delete Meals in your Tiffin Center&nbsp;&nbsp;
