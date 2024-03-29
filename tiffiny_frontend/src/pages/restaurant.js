@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 //redux
 import { useDispatch, useSelector } from "react-redux";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 //material-ui
 import Typography from "@material-ui/core/Typography";
@@ -12,7 +13,17 @@ import RestaurantItems from "../components/RestaurantItems";
 import SearchBar from "../components/SearchBar";
 import { fetchRestaurant } from "../redux/actions/dataActions";
 import Reviews from "../components/Reviews";
-
+const useStyles = makeStyles((theme) => ({
+  ...theme.spreadThis,
+  
+  searchArea:{
+    display:"flex",
+    alignItems:"center",
+    flexDirection:"column",
+    justifyContent:"center",
+    margin: "4rem 0",
+  }
+}));
 export default function Restaurant(props) {
   const restId = props.location.state.restId;
   const { loading } = useSelector((state) => state.data);
@@ -20,6 +31,7 @@ export default function Restaurant(props) {
   const { items } = useSelector((state) => state.data.restaurant);
   const { reviews } = useSelector((state) => state.data.restaurant);
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   useEffect(() => {
     if (items) {
@@ -76,7 +88,7 @@ export default function Restaurant(props) {
       ) : (
         <>
           <RestaurantInfo {...restaurant} />
-          <Grid container direction="row" style={{ marginTop: 40 }}>
+          {/* <Grid container direction="row" style={{ marginTop: 40 }}>
             <Grid
               item
               xs={12}
@@ -84,7 +96,7 @@ export default function Restaurant(props) {
               style={{
                 paddingLeft: "520px",
               }}
-            >
+            > */}
               <Typography
                 gutterBottom
                 variant="h5"
@@ -104,23 +116,28 @@ export default function Restaurant(props) {
                 Order from wide varieties of different available items below
               </Typography>
               <br />
-            </Grid>
-            <Grid
+            {/* </Grid> */}
+            {/* <Grid
               item
               xs={12}
               sm={4}
               style={{ marginTop: 20, paddingLeft: 40 }}
             >
-              <SearchBar page="items" handleSearch={handleSearch} />
-            </Grid>
+            </Grid> */}
+            <div className={classes.searchArea}>
+
+            <SearchBar page="items" handleSearch={handleSearch} />
+            </div>
+
             <RestaurantItems items={filteredItemsState} />
-          </Grid>
-          <Grid container direction="row" style={{ marginTop: 40 }}>
-            <Grid
+          {/* </Grid> */}
+          {/* <Grid container direction="row"  style={{ padding: "3rem" , borderTop : "1px solid #8c8c8c", margin:"2rem"}}> */}
+            {/* <Grid
               item
               xs={12}
               sm={12}
-            >
+            > */}
+            <div style={{ padding: "3rem" , borderTop : "1px solid #8c8c8c", margin:"2rem"}}> 
               <Typography
                 gutterBottom
                 variant="h5"
@@ -132,9 +149,10 @@ export default function Restaurant(props) {
                   📝
                 </span>
               </Typography>
-            </Grid>
+            {/* </Grid> */}
             <Reviews reviews={reviews} />
-          </Grid>
+            </div>
+          {/* </Grid> */}
         </>
       )}
     </>

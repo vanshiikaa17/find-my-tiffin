@@ -19,11 +19,11 @@ import { addReview } from "../redux/actions/dataActions";
 const useStyles = makeStyles({
   para: {
     fontSize: "x-large",
-    marginLeft: "32%",
+    // marginLeft: "32%",
   },
   paraSeller: {
     fontSize: "x-large",
-    marginLeft: "28%",
+    // marginLeft: "28%",
   },
 });
 
@@ -64,9 +64,9 @@ function Reviews(props) {
   };
 
   return (
-  <>
+  <div  style={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent:"center"}}>
     {!props.isSeller&&<>
-      <Button className={classes.button} onClick={handleOpen} style={{margin: '0 auto', display: "flex"}}>
+      <Button className={classes.button} onClick={handleOpen} style={{margin: '0 auto', display: "flex", backgroundColor:" #ff8300"}}>
         Write Your Review
       </Button>
       <ReviewDialog
@@ -77,7 +77,7 @@ function Reviews(props) {
         handleInputChange={handleInputChange}
       />
     </>}
-    <List style={{margin: '0 auto', display: "flex", flexDirection: "column"}}>
+    <List style={{margin: '3rem', display: "flex", flexDirection: "column", alignItems:"center", justifyContent:"center" }}>
         {reviews ? (
           reviews.length > 0 ? (
             reviews.map((item, index) => (
@@ -112,7 +112,7 @@ function Reviews(props) {
           No Reviews present currently.
         </p>}
     </List>
-  </>
+  </div>
   );
 }
 

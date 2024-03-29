@@ -20,12 +20,19 @@ const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: theme.palette.primary.main,
     color: "white",
-    width: "40%",
-    margin: "40px 0 0 30%",
+    width: "20%",
+    margin: "2rem 0",
     "&:hover": {
       backgroundColor: "#5a5c5a",
     },
   },
+  searchArea:{
+    display:"flex",
+    alignItems:"center",
+    flexDirection:"column",
+    justifyContent:"center",
+    margin: "4rem 0",
+  }
 }));
 
 export default function SellerDashboard() {
@@ -107,9 +114,11 @@ export default function SellerDashboard() {
   return (
     <>
       <RestaurantInfo {...sellerData} />
-      <Grid container direction="row" style={{ marginTop: 10 }}>
-        <Grid item xs={12} sm={1} />
-        <Grid item xs={12} sm={6}>
+      {/* <Grid container direction="row" style={{ marginTop: 20 }}> */}
+      <div>
+        {/* <Grid item xs={12} sm={2} />
+        <Grid item xs={12} sm={2} />
+        <Grid item xs={12} sm={4}>
           <Typography
             gutterBottom
             variant="h5"
@@ -121,16 +130,30 @@ export default function SellerDashboard() {
               🍜
             </span>
           </Typography>
-        </Grid>
-        <Grid item xs={12} sm={4}>
+        </Grid> */}
+        <div>
+        <Typography
+            gutterBottom
+            variant="h5"
+            style={{ textAlign: "center", margin: "2rem 0 0 0" }}
+            noWrap
+          >
+            Add, Edit, Delete Meals in your Tiffin Center&nbsp;&nbsp;
+            <span role="img" aria-label="burger" style={{ fontSize: 40 }}>
+              🍜
+            </span>
+          </Typography>
+        </div>
+        <div className={classes.searchArea}>
           <SearchBar page="items" handleSearch={handleSearch} />
-        </Grid>
-        <Grid item xs={12} sm={1} />
+        </div>
         <RestaurantItems items={filteredItemsState} />
-      </Grid>
-      <Button fullWidth className={classes.button} onClick={handleOpen}>
+      </div>
+      <div style={{display:"flex", alignItems:"center", flexDirection:"column", width:"100%", justifyContent:"center"}}>
+      <Button className={classes.button} onClick={handleOpen}>
         Add Item
       </Button>
+      </div>
       <ItemDialog
         open={open}
         handleClose={handleClose}
@@ -139,7 +162,7 @@ export default function SellerDashboard() {
         inputs={inputs}
         handleInputChange={handleInputChange}
       />
-      <Grid container direction="row" style={{ marginTop: 40 }}>
+      <Grid container direction="row" style={{ padding: "3rem" , borderTop : "1px solid #8c8c8c"}}>
         <Grid
           item
           xs={12}
@@ -151,13 +174,15 @@ export default function SellerDashboard() {
             noWrap
             style={{ textAlign: "center" }}
           >
-            Reviews
+            Reviews from users
             <span role="img" aria-label="fries" style={{ fontSize: 25 }}>
               📝
             </span>
           </Typography>
         </Grid>
+       
         <Reviews reviews={reviews} isSeller={true}/>
+        
       </Grid>
     </>
   );

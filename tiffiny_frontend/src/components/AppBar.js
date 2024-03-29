@@ -16,6 +16,7 @@ const useStyles = makeStyles(() => ({
   appBar: {
     backgroundColor: "black",
     marginBottom: 10,
+    position:"sticky"
   },
   title: { flex: 1, marginLeft: 60, color: "white" },
   buttonStyles: {
@@ -51,7 +52,7 @@ export default function AppBarPrimary() {
   };
 
   return (
-    <AppBar position="static" className={classes.appBar}>
+    <AppBar className={classes.appBar}>
       <Toolbar>
         <Link to="/" className={classes.title}>
           <Typography variant="h6" noWrap>
@@ -61,11 +62,14 @@ export default function AppBarPrimary() {
         {authenticated ? (
           role === "ROLE_SELLER" ? (
             <div className={classes.buttons}>
-              <Typography className={classes.buttonStyles}>
+              {/* <Typography className={classes.buttonStyles}>
                 Seller Dashboard
-              </Typography>
+              </Typography> */}
+              <Link to="/seller/dashboard">
+                <Button className={classes.buttonStyles}>Dashboard</Button>
+              </Link>
               <Link to="/seller/orders">
-                <Button className={classes.buttonStyles}>Orders</Button>
+                <Button className={classes.buttonStyles}>Tiffin Orders</Button>
               </Link>
               <Button
                 onClick={handleLogout}
@@ -78,7 +82,7 @@ export default function AppBarPrimary() {
           ) : (
             <div className={classes.buttons}>
               <Typography className={classes.buttonStyles}>
-                Hello, {firstName} {lastName}
+                Hello, {firstName}
               </Typography>
               <Link to="/orders">
                 <Button className={classes.buttonStyles}>My Tiffins</Button>
@@ -105,6 +109,9 @@ export default function AppBarPrimary() {
                 Register
               </Button>
             </Link>
+            <a href="#footer">
+              <Button className={classes.buttonStyles}>Add your business</Button>
+            </a>
           </div>
         )}
       </Toolbar>

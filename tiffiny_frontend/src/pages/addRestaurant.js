@@ -419,8 +419,7 @@ export default function AddRestaurant() {
             >
               1. Tell us about your restaurant. <br />
               2. Verify your Email. <br />
-              3. Access Restaurant Dashboard and go
-              &nbsp;&nbsp;&nbsp;&nbsp;live.
+              3. Access Restaurant Dashboard and go live.
               <br />
               <br />
               <br />

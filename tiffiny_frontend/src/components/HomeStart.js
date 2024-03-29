@@ -53,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: theme.palette.primary.main,
     marginTop: 30,
+    "&:hover":{
+      backgroundColor: "#5a5c5a",
+
+    }
   },
 }));
 
@@ -71,8 +75,9 @@ const HomeStart = (props) => {
           Having trouble in selecting the perfect meal of the day that's not just healthy but is tasty too? We've got you, don't worry!
         </Typography>
         <Button variant="outlined" className={classes.ctaOrder} onClick={props.handleClick}>
-          ORDER NOW
+          Find your tiffin
         </Button>
+        
       </div>
       <div className={classes.cover}>
         <img src={cover} alt="safe-delivery" className={classes.coverImg} />

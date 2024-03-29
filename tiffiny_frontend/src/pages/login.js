@@ -76,8 +76,7 @@ export default function Login() {
         <form noValidate onSubmit={handleSubmit}>
           {signUpSuccess && (
             <Typography variant="body2" className={classes.customSuccess}>
-              Account registered successfully, please verify your Email before
-              logging-in
+              Account registered successfully, please log in to your account
             </Typography>
           )}
           <TextField

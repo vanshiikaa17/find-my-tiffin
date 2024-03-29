@@ -29,8 +29,8 @@ const useStyles = makeStyles({
     height: "28%",
   },
   para: {
-    fontSize: "5rem",
-    marginLeft: "32%",
+    fontSize: "1.2rem",
+    // marginLeft: "32%",
   },
 });
 
@@ -83,29 +83,29 @@ function Restaurant(props) {
               >
                 {name}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="textSecondary" component="p" className={classes.para}>
                 {tags}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="textSecondary" component="p" className={classes.para}>
                 Costs Rs.{costForOne} for one
               </Typography>
-              <Typography variant="body2" color="textPrimary">
+              <Typography variant="body2" color="textPrimary" className={classes.para}>
                 Minimum order Rs.{minOrderAmount}
               </Typography>
-              <Typography variant="body2" color="textPrimary">
+              <Typography variant="body2" color="textPrimary" className={classes.para}>
                 {paymentString}
               </Typography>
               <br />
-              <Typography variant="body2" color="textPrimary">
+              <Typography variant="body2" color="textPrimary" className={classes.para}>
                 Address: {addressString}
               </Typography>
-              <Typography variant="body2" color="textPrimary">
+              <Typography variant="body2" color="textPrimary" className={classes.para}>
                 Call: +91 {phoneNo}
               </Typography>
               {/* <Typography variant="body2" color="textPrimary">
                 Dine-In Timing: 1pm to 12am
               </Typography> */}
-              <Typography variant="body2" color="textPrimary">
+              <Typography variant="body2" color="textPrimary" className={classes.para}>
                 Rating: {ratingString}
               </Typography>
             </Grid>

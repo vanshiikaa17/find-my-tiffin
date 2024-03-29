@@ -30,13 +30,17 @@ const useStyles = makeStyles((theme) => ({
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: 400,
-    backgroundColor: "#edebeb",
+    width: 600,
+    backgroundColor: "white",
+    border: "0.4px solid #8c8c8c"
   },
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
     position: "relative",
+    backgroundColor: "white",
+    color:"black"
+
   },
   results: {
     position: "absolute",

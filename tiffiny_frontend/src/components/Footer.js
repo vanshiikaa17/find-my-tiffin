@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "black",
     color:"white",
-    marginTop: "30rem",
+    marginTop: "15rem",
     height: "42vh",
     textAlign: "center",
   },
@@ -38,70 +38,77 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#5a5c5a",
     },
   },
+  businessdiv:{
+    display:"flex",
+    alignItems:"center",
+    flexDirection:"column",
+    justifyContent:"center"
+  }
 }));
 
 export default function Footer() {
   const { authenticated } = useSelector((state) => state.auth);
   const classes = useStyles();
   return (
-    <Grid container direction="row" className={classes.container}>
-      <Grid item xs={12} sm={4} className={classes.innerCont}>
-        {authenticated ? (
-          <Grid container direction="row">
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h5" component="p">
-                Company
-              </Typography>
-              <Typography variant="body1" component="p">
-                <br />
-                - About <br />
-                - Blog <br />
-                - Careers <br />
-                - Contact <br />
-                - Report Fraud <br />
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h5" component="p">
-                For You
-              </Typography>
-              <Typography variant="body1" component="p">
-                <br />
-                - Privacy <br />
-                - Terms <br />
-                - Security <br />
-                - Sitemap <br />
-                - Code of conduct <br />
-              </Typography>
-            </Grid>
-          </Grid>
-        ) : (
-          <>
-            <Typography variant="h4" component="p">
-              Tiffiny for Business
-            </Typography>
-            <Typography variant="body1" component="p">
-              Get more out of your business, without losing focus on what is
-              most important — delighting your customers
-            </Typography>
-            <br />
-            <Link to="/addtiffincenter">
-              <Button className={classes.buttonStyleOne}>Get Started</Button>
-            </Link>
-          </>
-        )}
-      </Grid>
+    <div id="footer">
+      <Grid container direction="row" className={classes.container} >
       <Grid item xs={12} sm={3} className={classes.innerCont}>
         {/* <Typography variant="h5" component="p">
           Tiffiny NewsLetter
-        </Typography>
-        <Typography variant="body1" component="p" style={{ marginBottom: 28 }}>
+          </Typography>
+          <Typography variant="body1" component="p" style={{ marginBottom: 28 }}>
           Stay updated with new offers from Tiffiny
-        </Typography>
-        <TextField label="Your Email address" variant="outlined" style={{backgroundColor:"white"}} />
+          </Typography>
+          <TextField label="Your Email address" variant="outlined" style={{backgroundColor:"white"}} />
         <Button className={classes.buttonStyleTwo}>SEND</Button> */}
       </Grid>
-      <Grid item xs={12} sm={3} className={classes.resources}>
+        <Grid item xs={12} sm={4} className={classes.innerCont}>
+          {authenticated ? (
+            <Grid container direction="row">
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h5" component="p">
+                  Company
+                </Typography>
+                <Typography variant="body1" component="p">
+                  <br />
+                  - About <br />
+                  - Blog <br />
+                  - Careers <br />
+                  - Contact <br />
+                  - Report Fraud <br />
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h5" component="p">
+                  For You
+                </Typography>
+                <Typography variant="body1" component="p">
+                  <br />
+                  - Privacy <br />
+                  - Terms <br />
+                  - Security <br />
+                  - Sitemap <br />
+                  - Code of conduct <br />
+                </Typography>
+              </Grid>
+            </Grid>
+          ) : (
+            <div className={classes.businessdiv}>
+              <Typography variant="h4" component="p">
+                Tiffiny for Business
+              </Typography>
+              <Typography variant="body1" component="p">
+                Get more out of your business, without losing focus on what is
+                most important — delighting your customers
+              </Typography>
+              <br />
+              <Link to="/addtiffincenter">
+                <Button className={classes.buttonStyleOne}>Get Started</Button>
+              </Link>
+            </div>
+          )}
+        </Grid>
+      {/* <Grid item xs={12} sm={3} className={classes.resources}>
         <Typography variant="h5" component="p">
           Resources/Stack Used
         </Typography>
@@ -113,7 +120,8 @@ export default function Footer() {
           - MongoDB <br />
           - Google Geolocation <br />
         </Typography>
-      </Grid>
+      </Grid> */}
     </Grid>
+    </div>
   );
 }
