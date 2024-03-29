@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "black",
     color:"white",
-    marginTop: 40,
+    marginTop: "30rem",
     height: "42vh",
     textAlign: "center",
   },

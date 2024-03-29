@@ -81,7 +81,7 @@ export default function AppBarPrimary() {
                 Hello, {firstName} {lastName}
               </Typography>
               <Link to="/orders">
-                <Button className={classes.buttonStyles}>Orders</Button>
+                <Button className={classes.buttonStyles}>My Tiffins</Button>
               </Link>
               <Link to={{ pathname: "/cart", state: { address: address } }}>
                 <Button className={classes.buttonStyles}>Cart</Button>
