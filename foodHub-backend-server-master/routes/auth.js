@@ -20,8 +20,8 @@ router.post(
             );
           }
         });
-      })
-      .normalizeEmail(),
+      }),
+      // .normalizeEmail(),
     body("password", "Password should be at least 6 characters long")
       .trim()
       .isLength({ min: 6 }),
@@ -56,8 +56,8 @@ router.post(
             );
           }
         });
-      })
-      .normalizeEmail(),
+      }),
+      // .normalizeEmail(),
     body("password", "Password should be at least 6 characters long")
       .trim()
       .isLength({ min: 6 }),

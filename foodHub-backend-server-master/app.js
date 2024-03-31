@@ -73,11 +73,9 @@ app.use((error, req, res, next) => {
 });
 
 const clients = {};
-
 mongoose
   .connect(
-      `mongodb://localhost:27017/find-my-tiffin`
-   
+      process.env.MONGO_CONNECTION_STRING
     )
   .then((result) => {
     console.log("Connected to db");
@@ -101,6 +99,6 @@ mongoose
       });
     });
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("error in socket",err));
 
 exports.clients = clients;

@@ -1,21 +1,11 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
 const jwt = require("jsonwebtoken");
-
+const sendEmail=require('../util/sendEmail');
 const User = require("../models/user");
 const Account = require("../models/account");
 const Seller = require("../models/seller");
-
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key: process.env.SENDGRID_KEY,
-    },
-  })
-);
 
 exports.signupUser = (req, res, next) => {
   const errors = validationResult(req);
@@ -63,28 +53,30 @@ exports.signupUser = (req, res, next) => {
         account: savedAccount,
       });
       res.status(201).json({
-        message:
-          "User signed-up successfully, please Login.",
+        message: "User signed-up successfully, please Login.",
         userId: user._id,
       });
       return user.save();
     })
-    // .then((savedUser) => {
-    //   transporter.sendMail({
-    //     to: email,
-    //     from: "vanshikamohindra.vani@gmail.com",
-    //     subject: "Verify your Account on Find my tiffin",
-    //     html: `
-    //       <p>Please verify your email by clicking on the link below - Tiffiny</p>
-    //       <p>Click this <a href="http://localhost:3002/auth/verify/${token}">link</a> to verify your account.</p>
-    //     `,
-    //   });
-    //   res.status(201).json({
-    //     message:
-    //       "User signed-up successfully, please verify your email before logging in.",
-    //     userId: savedUser._id,
-    //   });
-    // })
+    .then((savedUser) => {
+      try {
+        const message = `Please verify your email by clicking on the link below - Tiffiny\nClick this to verify your account.\n\nhttp://localhost:3002/auth/verify/${token} \n`;
+        sendEmail({
+          email: email,
+          subject: "Verify your Account on Find my tiffin",
+          message,
+        }).then(console.log("email sent"));
+      } catch (error) {
+        console.log("error while sending mail");
+        console.log(error.message);
+      }
+
+      res.status(201).json({
+        message:
+          "User signed-up successfully, please verify your email before logging in.",
+        userId: savedUser._id,
+      });
+    })
     .catch((err) => {
       if (!err.statusCode) err.statusCode = 500;
       next(err);
@@ -239,31 +231,41 @@ exports.signupSeller = (req, res, next) => {
           lat: lat,
           lng: lng,
         },
-        rating:rating,
+        rating: rating,
       });
       res.status(201).json({
-            message:
-              "Seller signed-up successfully, please login.",
-            sellerId: seller._id,
-          });
+        message: "Seller signed-up successfully, please login.",
+        sellerId: seller._id,
+      });
       return seller.save();
     })
-    // .then((savedSeller) => {
-    //   transporter.sendMail({
-    //     to: email,
-    //     from: "tiffinyadm@gmail.com",
-    //     subject: "Verify your Account on Tiffiny",
-    //     html: `
-    //       <p>Please verify your email by clicking on the link below - Tiffiny</p>
-    //       <p>Click this <a href="http://localhost:3002/auth/verify/${token}">link</a> to verify your account.</p>
-    //     `,
-    //   });
-    //   res.status(201).json({
-    //     message:
-    //       "Seller signed-up successfully, please verify your email before logging in.",
-    //     sellerId: savedSeller._id,
-    //   });
-    // })
+    .then((savedSeller) => {
+      try {
+        const message = `Please verify your email by clicking on the link below - Tiffiny\nClick this to verify your account.\n\nhttp://localhost:3002/auth/verify/${token} \n`;
+        sendEmail({
+          email: email,
+          subject: "Verify your Account on Find my tiffin",
+          message,
+        }).then(console.log("email sent"));
+      } catch (error) {
+        console.log("error while sending mail");
+        console.log(error.message);
+      }
+      // transporter.sendMail({
+      //   to: email,
+      //   from: "tiffinyadm@gmail.com",
+      //   subject: "Verify your Account on Tiffiny",
+      //   html: `
+      //     <p>Please verify your email by clicking on the link below - Tiffiny</p>
+      //     <p>Click this <a href="http://localhost:3002/auth/verify/${token}">link</a> to verify your account.</p>
+      //   `,
+      // });
+      res.status(201).json({
+        message:
+          "Seller signed-up successfully, please verify your email before logging in.",
+        sellerId: savedSeller._id,
+      });
+    })
     .catch((err) => {
       if (!err.statusCode) err.statusCode = 500;
       next(err);

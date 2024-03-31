@@ -26,3 +26,5 @@ nodemon.json
 
 images
 /images
+
+*.env

@@ -20,7 +20,7 @@ const accountSchema = new Schema(
     accountVerifyTokenExpiration: Date,
     isVerified: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   { timestamps: true }
