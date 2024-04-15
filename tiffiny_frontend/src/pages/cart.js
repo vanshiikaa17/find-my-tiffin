@@ -19,6 +19,7 @@ import useForm from "../hooks/forms";
 
 import CartItem from "../components/CartItem";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import Payment from "../components/Payment";
 
 const useStyles = makeStyles((theme) => ({
   ...theme.spreadThis,
@@ -468,6 +469,7 @@ const Cart = (props) => {
                           <span>Delivery Charge</span>
                           <span>Rs. {deliveryCharge} x {dateRange.startDate ? (dateRange.endDate.getTime() - dateRange.startDate.getTime()) / (1000 * 3600 * 24) + 1 : 1}</span>
                         </div>
+                        <Payment/>
                       </>
                     }
                     <hr />
