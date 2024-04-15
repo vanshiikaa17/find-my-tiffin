@@ -27,17 +27,22 @@ import { addToCart } from "../redux/actions/dataActions";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    alignItems:"center",
+    justifyContent:"space-between"
   },
   details: {
     display: "flex",
     flexDirection: "column",
+    alignItems:"center",
+    justifyContent:"space-evenly"
   },
   content: {
-    flex: "1 0 auto",
+    // flex: "1 0 auto",
+    marginRight:"2rem"
   },
   cover: {
-    height: "180",
-    width: "60%",
+    height: "12rem",
+    width: "40%",
   },
   snackbar: {
     width: "100%",
@@ -157,9 +162,9 @@ export default function ItemCard(props) {
               color="secondary"
               style={{
                 color: "#000",
-                width: "60%",
-                marginLeft: "20%",
-                marginBottom: "10%",
+                width: "5rem",
+                marginLeft: "3rem !important",
+                marginBottom: "3rem",
               }}
               onClick={() => {
                 handleCart();
@@ -175,9 +180,9 @@ export default function ItemCard(props) {
                 color="secondary"
                 style={{
                   color: "#000",
-                  width: "60%",
-                  marginLeft: "20%",
-                  marginBottom: "10%",
+                  width: "4rem",
+                  marginLeft: "3rem",
+                  marginBottom: "3rem",
                 }}
                 variant="contained"
               >

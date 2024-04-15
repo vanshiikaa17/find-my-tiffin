@@ -60,7 +60,7 @@ exports.signupUser = (req, res, next) => {
     })
     .then((savedUser) => {
       try {
-        const message = `Please verify your email by clicking on the link below - Tiffiny\nClick this to verify your account.\n\nhttp://localhost:3002/auth/verify/${token} \n`;
+        const message = `Please verify your email by clicking on the link below - Find my tiffin\nClick this to verify your account.\n\nhttp://localhost:3002/auth/verify/${token} \n`;
         sendEmail({
           email: email,
           subject: "Verify your Account on Find my tiffin",
@@ -241,7 +241,7 @@ exports.signupSeller = (req, res, next) => {
     })
     .then((savedSeller) => {
       try {
-        const message = `Please verify your email by clicking on the link below - Tiffiny\nClick this to verify your account.\n\nhttp://localhost:3002/auth/verify/${token} \n`;
+        const message = `Please verify your email by clicking on the link below - Find my tiffin\nClick this to verify your account.\n\nhttp://localhost:3002/auth/verify/${token} \n`;
         sendEmail({
           email: email,
           subject: "Verify your Account on Find my tiffin",

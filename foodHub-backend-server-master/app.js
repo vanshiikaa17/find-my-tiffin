@@ -75,7 +75,9 @@ app.use((error, req, res, next) => {
 const clients = {};
 mongoose
   .connect(
-      process.env.MONGO_CONNECTION_STRING
+      // process.env.MONGO_CONNECTION_STRING
+      `mongodb://localhost:27017/find-my-tiffin`
+      // `mongodb+srv://sahaj_279:chennaiexpress1A@cluster0.fktjfco.mongodb.net/tiffin`
     )
   .then((result) => {
     console.log("Connected to db");

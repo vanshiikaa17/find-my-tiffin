@@ -385,12 +385,12 @@ export default function AddRestaurant() {
                     )}
                   </Button>
                   <br />
-                  <small
+                  {/* <small
                     className={classes.small}
                     style={{ marginLeft: "260px" }}
                   >
                     Partner with Tiffiny and scale your business
-                  </small>
+                  </small> */}
                 </form>
               </Grid>
             </Grid>
