@@ -1,5 +1,5 @@
 const path = require("path");
-
+const cors= require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -8,7 +8,8 @@ const multer = require("multer");
 const authRoutes = require("./routes/auth");
 const itemRoutes = require("./routes/item");
 const userRoutes = require("./routes/user");
-const reviewRoutes = require("./routes/review")
+const reviewRoutes = require("./routes/review");
+const paymentRoutes= require ("./routes/payment");
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -37,6 +38,7 @@ const app = express();
 const upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 // app.use(multer().array());
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
@@ -53,6 +55,7 @@ app.use((req, res, next) => {
 
 app.use("/auth", upload.array("images", 10), authRoutes);
 app.use("/seller", upload.single("image"), itemRoutes);
+app.use("/payment", paymentRoutes);
 app.use(upload.array(),reviewRoutes);
 app.use(userRoutes);
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 //redux
@@ -31,6 +31,11 @@ import ScrollToTop from "./util/scrollToTop";
 //restrict routes
 import { AuthRoute, SellerRoute, UserRoute } from "./util/route";
 
+//stripe
+
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
 //pages
 import home from "./pages/home";
 import error404 from "./pages/404";
@@ -60,7 +65,17 @@ if (token) {
 }
 
 function App() {
+  const [stripeApiKey, setStripeApi] = useState("");
+  async function getStripeApi(){
+    const key = await axios.get("/payment/stripeapi");
+    console.log("key"+key.data.stripeAPIKey);
+    setStripeApi(key.data.stripeAPIKey) ;
+  }
+  // const stripeApiKey="pk_test_51MQ0cGSJI45UgsmwOytPN1vCRRZcY6t3D9ItrYfv9rFqNJ5KUG2v1sRhEjGpoyrCjufR1Vhx20hPPSfE8r0t3uDN00i5gPqBQA";
+
   useEffect(() => {
+    getStripeApi();
+    // console.log(stripeApiKey);
     store.dispatch(fetchRestaurantsByAddress(0, 0));
   }, []);
   return (
@@ -80,7 +95,12 @@ function App() {
               path="/seller/dashboard"
               component={sellerDash}
             />
+            {stripeApiKey&&(
+              <Elements stripe={loadStripe(stripeApiKey)}>
+
             <UserRoute exact path="/cart" component={cart} />
+            </Elements>
+            )}
             <UserRoute exact path="/orders" component={orders} />
             <SellerRoute exact path="/seller/orders" component={orders} />
             <Route component={error404} />
