@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Elements } from '@stripe/react-stripe-js';
+// import { Elements } from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
 
 
-import { BsFillCreditCard2FrontFill } from "react-icons/bs";
-import { MdDateRange, MdVpnKey } from "react-icons/md";
-import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from "@stripe/react-stripe-js"
+// import { BsFillCreditCard2FrontFill } from "react-icons/bs";
+// import { MdDateRange, MdVpnKey } from "react-icons/md";
+// import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from "@stripe/react-stripe-js"
 
 import { getCart, fetchAddress } from "../redux/actions/dataActions";
 import Spinner from "../util/spinner/spinner";
@@ -135,8 +136,8 @@ const Cart = (props) => {
   const [dateRange, setDateRange] = React.useState({});
   const [deliveryCharge, setDeliveryCharge] = React.useState(20);
 
-  const stripe = useStripe();
-  const elements = useElements();
+  // const stripe = useStripe();
+  // const elements = useElements();
 
   // const paymentBtn =useRef(null);
 
@@ -154,43 +155,33 @@ const Cart = (props) => {
   }
 
   const handlePlaceOrder = async () => {
-    try {
-      const requestHeaders = {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
+    const stripe= await loadStripe("pk_test_51MQ0cGSJI45UgsmwOytPN1vCRRZcY6t3D9ItrYfv9rFqNJ5KUG2v1sRhEjGpoyrCjufR1Vhx20hPPSfE8r0t3uDN00i5gPqBQA");
 
-      const { data } = await axios.post("/payment/process/newpayment", paymentData, requestHeaders);
+    const body={
+      products:cart,
+      amount: paymentData
+    }
 
-      const clientSecret = data.client_secret;
+    const headers ={
+      "Content-Type":"application/json"
+    }
 
-      if (!stripe || !elements) return;
+    const response = await fetch("http://localhost:3002/payment/create-checkout-session",{
+      method:"POST",
+      headers:headers,
+      body:JSON.stringify(body)
+  });
 
-      const confirm = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardNumberElement),
-          billing_details: {
-            name: firstname,
-            // email:user.email,
-            address: {
-              line1: inputs.street,
-              // city:shippingInfo.city,
-              // state:shippingInfo.state,
-              postal_code: inputs.zip,
-              // country:shippingInfo.country
-            }
-          }
-        }
-      });
-      if (confirm.error) {
-        // paymentBtn.current.disabled=false;
+    const session = await response.json();
 
-        alert(confirm.error.message);
-      } else {
-        if (confirm.paymentIntent.status === "succeeded") {
+    const result= stripe.redirectToCheckout({
+      sessionId:session.id
+    });
 
-
+    if(result.error){
+      console.log(result.error);
+    }
+    else{
           const userData = {
             street: inputs.street,
             aptName: inputs.aptName,
@@ -199,23 +190,70 @@ const Cart = (props) => {
             phoneNo: inputs.phoneNo,
             date: dateRange
           };
-          dispatch(fetchAddress(userData, history));
-        } else {
-          alert.error("An issue occurred while processing payment.")
-        }
-      }
-
-    } catch (err) {
-      // paymentBtn.current.disabled=false;
-      alert(err.response.data.message);
+      dispatch(fetchAddress(userData, history));
     }
+    // try {
+    //   const requestHeaders = {
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     }
+    //   }
+
+      // const { data } = await axios.post("/payment/process/newpayment", paymentData, requestHeaders);
+
+      // const clientSecret = data.client_secret;
+
+      // if (!stripe || !elements) return;
+
+      // const confirm = await stripe.confirmCardPayment(clientSecret, {
+      //   payment_method: {
+      //     card: elements.getElement(CardNumberElement),
+      //     billing_details: {
+      //       name: firstname,
+      //       // email:user.email,
+      //       address: {
+      //         line1: inputs.street,
+      //         // city:shippingInfo.city,
+      //         // state:shippingInfo.state,
+      //         postal_code: inputs.zip,
+      //         // country:shippingInfo.country
+      //       }
+      //     }
+      //   }
+      // });
+      // if (confirm.error) {
+      //   // paymentBtn.current.disabled=false;
+
+      //   alert(confirm.error.message);
+      // } else {
+      //   if (confirm.paymentIntent.status === "succeeded") {
+
+
+      //     const userData = {
+      //       street: inputs.street,
+      //       aptName: inputs.aptName,
+      //       locality: inputs.locality,
+      //       zip: inputs.zip,
+      //       phoneNo: inputs.phoneNo,
+      //       date: dateRange
+      //     };
+        //   dispatch(fetchAddress(userData, history));
+        // } else {
+        //   alert.error("An issue occurred while processing payment.")
+        // }
+      // }
+
+    // } catch (err) {
+      // paymentBtn.current.disabled=false;
+      // alert(err.response.data.message);
+    // }
 
 
 
 
 
 
-  };
+  }
 
 
   const toggle = () => setOpen(!open);
@@ -264,6 +302,7 @@ const Cart = (props) => {
 
   useEffect(() => {
     console.log("in useEffect cart");
+    console.log(cart);
     console.log("Step=" + step);
     dispatch(getCart());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -537,7 +576,7 @@ const Cart = (props) => {
                     {/* <Payment /> */}
                     <div style={{ marginLeft: 20, marginRight: 20 , padding: "1rem 0"}}>
                       <form className='paymentForm'>
-                        <Typography gutterBottom variant="h5" noWrap>Card Details</Typography>
+                        {/* <Typography gutterBottom variant="h5" noWrap>Card Details</Typography>
                         <div className={classes.paymentDiv}>
                           <BsFillCreditCard2FrontFill />
                           <CardNumberElement className={classes.paymentInput} />
@@ -549,7 +588,7 @@ const Cart = (props) => {
                         <div  className={classes.paymentDiv}>
                           <MdVpnKey />
                           <CardCvcElement className={classes.paymentInput} />
-                        </div>
+                        </div> */}
 
                         <Button
                           //fullwidth

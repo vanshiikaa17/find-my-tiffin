@@ -35,7 +35,35 @@ const sendAPIKey = async (req, res) => {
     }
 
 }
+const createSession = async(req, res)=>{
+const {products} = req.body;
+console.log(products);
+const lineItems=products.map((product)=>(
+    {
+        price_data:{
+            currency:"inr",
+            product_data:{
+                name: product.itemId.title
+            },
+            unit_amount:product.itemId.price * 100,
+        },
+        quantity: product.quantity
+    }
+)
 
+)
+const session =await stripe.checkout.sessions.create({
+    payment_method_types:["card"],
+    
+    mode:"payment",
+    line_items:lineItems,
+    success_url:"http://localhost:3000/orders",
+    cancel_url:"http://localhost:3000/cancel"
+});
+
+res.json({id:session.id})
+
+}
 module.exports = {
-    payment, sendAPIKey
+    payment, sendAPIKey, createSession
 }

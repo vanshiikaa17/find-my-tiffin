@@ -33,8 +33,8 @@ import { AuthRoute, SellerRoute, UserRoute } from "./util/route";
 
 //stripe
 
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+// import { Elements } from '@stripe/react-stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 
 //pages
 import home from "./pages/home";
@@ -65,16 +65,26 @@ if (token) {
 }
 
 function App() {
-  const [stripeApiKey, setStripeApi] = useState("");
-  async function getStripeApi(){
-    const key = await axios.get("/payment/stripeapi");
-    console.log("key"+key.data.stripeAPIKey);
-    setStripeApi(key.data.stripeAPIKey) ;
-  }
+  // const [stripeApiKey, setStripeApi] = useState("");
+  // const [loadingStripe, setLoadingStripe] = useState(true);
+  // async function getStripeApi(){
+    // const key = await axios.get("/payment/stripeapi");
+    // console.log("key"+key.data.stripeAPIKey);
+    // if(!stripeApiKey)
+    // setStripeApi(key.data.stripeAPIKey) ;
+  //   try {
+  //     const key = await axios.get("/payment/stripeapi");
+  //     setStripeApi(key.data.stripeAPIKey);
+  //     setLoadingStripe(false); // Set loading to false when key is fetched
+  //   } catch (error) {
+  //     console.error("Error fetching Stripe API key:", error);
+  //     setLoadingStripe(false); // Set loading to false even on error
+  //   }
+  // }
   // const stripeApiKey="pk_test_51MQ0cGSJI45UgsmwOytPN1vCRRZcY6t3D9ItrYfv9rFqNJ5KUG2v1sRhEjGpoyrCjufR1Vhx20hPPSfE8r0t3uDN00i5gPqBQA";
 
   useEffect(() => {
-    getStripeApi();
+    // getStripeApi();
     // console.log(stripeApiKey);
     store.dispatch(fetchRestaurantsByAddress(0, 0));
   }, []);
@@ -95,12 +105,15 @@ function App() {
               path="/seller/dashboard"
               component={sellerDash}
             />
-            {stripeApiKey&&(
-              <Elements stripe={loadStripe(stripeApiKey)}>
+            {/* {stripeApiKey&&(
+              <Elements stripe={loadStripe(stripeApiKey)}> */}
 
             <UserRoute exact path="/cart" component={cart} />
-            </Elements>
-            )}
+            {/* </Elements>
+            )} */}
+
+
+
             <UserRoute exact path="/orders" component={orders} />
             <SellerRoute exact path="/seller/orders" component={orders} />
             <Route component={error404} />

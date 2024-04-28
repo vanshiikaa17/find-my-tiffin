@@ -2,7 +2,9 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 var mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
+// const sendgridTransport = require("nodemailer-sendgrid-transport");
+const sendEmail=require('../util/sendEmail');
+
 
 const Seller = require("../models/seller");
 const Item = require("../models/item");
@@ -13,13 +15,13 @@ const io = require("../util/socket");
 const app = require("../app");
 const review = require("../models/review");
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key: process.env.SENDGRID_KEY,
-    },
-  })
-);
+// const transporter = nodemailer.createTransport(
+//   sendgridTransport({
+//     auth: {
+//       api_key: process.env.SENDGRID_KEY,
+//     },
+//   })
+// );
 
 exports.getRestaurants = (req, res, next) => {
   Seller.find()
@@ -472,17 +474,29 @@ exports.postOrderStatus = (req, res, next) => {
         throw error;
       }
       order.status = status;
-      transporter.sendMail({
-        to: order.user.email,
-        from: "tiffinyadm@gmail.com",
-        subject: "Order Status",
-        html: `
-          <p>Hi ${order.user.name}</p>
-          <p>This is to inform that your order from ${order.seller.name} has been <b>${order.status}</b></p>
+      // transporter.sendMail({
+      //   to: order.user.email,
+      //   from: "tiffinyadm@gmail.com",
+      //   subject: "Order Status",
+      //   html: `
+      //     <p>Hi ${order.user.name}</p>
+      //     <p>This is to inform that your order from ${order.seller.name} has been <b>${order.status}</b></p>
 
-          <p>Thankyou</p>
-        `,
-      });
+      //     <p>Thankyou</p>
+      //   `,
+      // });
+
+      try {
+        const message = `Hi ${order.user.name} \n This is to inform that your order from ${order.seller.name} has been <b>${order.status}`;
+        sendEmail({
+          email: order.user.email,
+          subject: "FindMyTiffin - Order status",
+          message,
+        }).then(console.log("email sent"));
+      } catch (error) {
+        console.log("error while sending mail");
+        console.log(error.message);
+      }
       return order.save();
     })
     .then((updatedOrder) => {

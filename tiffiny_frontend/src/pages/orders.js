@@ -34,6 +34,7 @@ const Orders = (props) => {
 
   useEffect(() => {
     dispatch(getOrders());
+    console.log("orders page loaded")
     const socket = openSocket(process.env.REACT_APP_SERVER_URL);
     socket.emit("add-user", { userId: _id });
     socket.on("orders", (data) => {
