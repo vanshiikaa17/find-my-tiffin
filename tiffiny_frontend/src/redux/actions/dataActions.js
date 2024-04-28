@@ -285,7 +285,7 @@ export const placeOrder = (userData,history) => (dispatch) => {
   axios
     .post("/order",userData.date)
     .then((res) => {
-      history.push("/sellerDash");
+      // history.push("/sellerDash");
       dispatch(getOrders());
     })
     .catch((err) => {

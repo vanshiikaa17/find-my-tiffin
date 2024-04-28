@@ -155,6 +155,14 @@ const Cart = (props) => {
   }
 
   const handlePlaceOrder = async () => {
+    const userData = {
+      street: inputs.street,
+      aptName: inputs.aptName,
+      locality: inputs.locality,
+      zip: inputs.zip,
+      phoneNo: inputs.phoneNo,
+      date: dateRange
+    };
     const stripe= await loadStripe("pk_test_51MQ0cGSJI45UgsmwOytPN1vCRRZcY6t3D9ItrYfv9rFqNJ5KUG2v1sRhEjGpoyrCjufR1Vhx20hPPSfE8r0t3uDN00i5gPqBQA");
 
     const body={
@@ -165,6 +173,7 @@ const Cart = (props) => {
     const headers ={
       "Content-Type":"application/json"
     }
+    dispatch(fetchAddress(userData, history));
 
     const response = await fetch("http://localhost:3002/payment/create-checkout-session",{
       method:"POST",
@@ -173,7 +182,7 @@ const Cart = (props) => {
   });
 
     const session = await response.json();
-
+   
     const result= stripe.redirectToCheckout({
       sessionId:session.id
     });
@@ -181,17 +190,9 @@ const Cart = (props) => {
     if(result.error){
       console.log(result.error);
     }
-    else{
-          const userData = {
-            street: inputs.street,
-            aptName: inputs.aptName,
-            locality: inputs.locality,
-            zip: inputs.zip,
-            phoneNo: inputs.phoneNo,
-            date: dateRange
-          };
-      dispatch(fetchAddress(userData, history));
-    }
+    // else{
+          
+    // }
     // try {
     //   const requestHeaders = {
     //     headers: {
@@ -562,50 +563,20 @@ const Cart = (props) => {
                         Proceed to Checkout
                       </Button>
                     )}
+                    {step === 3 && (
+                      <Button
+                      //fullwidth
+                      className={classes.checkoutButton}
+                      onClick={handlePlaceOrder}
+
+                    >
+                      Place Order
+                    </Button>
+                    )}
 
                   </div>
                 </Paper>
-                {step === 3 && (
-                  // <Elements>
-
-                  <Paper
-                    className={classes.paper}
-                    style={{ backgroundColor: "#faf7f7", marginTop: "3rem" }}
-                    elevation={4}>
-
-                    {/* <Payment /> */}
-                    <div style={{ marginLeft: 20, marginRight: 20 , padding: "1rem 0"}}>
-                      <form className='paymentForm'>
-                        {/* <Typography gutterBottom variant="h5" noWrap>Card Details</Typography>
-                        <div className={classes.paymentDiv}>
-                          <BsFillCreditCard2FrontFill />
-                          <CardNumberElement className={classes.paymentInput} />
-                        </div>
-                        <div  className={classes.paymentDiv}>
-                          <MdDateRange />
-                          <CardExpiryElement className={classes.paymentInput} />
-                        </div>
-                        <div  className={classes.paymentDiv}>
-                          <MdVpnKey />
-                          <CardCvcElement className={classes.paymentInput} />
-                        </div> */}
-
-                        <Button
-                          //fullwidth
-                          className={classes.checkoutButton}
-                          onClick={handlePlaceOrder}
-
-                        >
-                          Place Order
-                        </Button>
-                      </form>
-
-                    </div>
-
-
-                  </Paper>
-                  // {/* </Elements> */}
-                )}
+                
               </Grid>
             }
             <Grid item sm={1} />
